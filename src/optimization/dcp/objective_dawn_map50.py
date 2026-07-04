@@ -44,8 +44,8 @@ class ObjectiveDawnMap50:
                 
         temp_yaml_path = os.path.join(restored_dir, "temp_eval.yaml")
         lines = [
-            f"path: A:/HUST_on_GitHub/ProjectCV/data/dawn",
-            f"train: A:/HUST_on_GitHub/ProjectCV/data/dawn/images",
+            f"path: {restored_dir}",
+            f"train: {restored_images_dir}",
             f"val: {restored_images_dir}",
             f"names:",
             f"  0: person",
@@ -60,7 +60,6 @@ class ObjectiveDawnMap50:
         with open(temp_yaml_path, "w") as f:
             f.write("\n".join(lines))
 
-        # Evaluate
         self.yolo_evaluator.data_yaml = temp_yaml_path
         metrics = self.yolo_evaluator.evaluate(temp_yaml_path)
 

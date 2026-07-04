@@ -1,190 +1,136 @@
-﻿# Improving Object Detection in Unconstrained Environments via Image Restoration
-
-This repository contains the complete source code for our Computer Vision project. The goal is to improve object detection under adverse weather/degradation conditions by restoring degraded images before YOLO detection.
-
-We implement and compare **four categories of restoration approaches**:
-
-| Category | Methods | Type |
-|----------|---------|------|
-| **AdaIR** | Adaptive Image Restoration (5-degradation) | Deep Learning |
-| **UDPNet** | Uncertainty-aware Dehazing (ConvIR / FSNet) | Deep Learning |
-| **HOGformer** | HOG-based Transformer for Image Restoration | Deep Learning |
-| **Classic Filters** | DCP, WMGF, LIME, BM3D, RBCP, Desnowing, Motion Deblur (Wiener / Richardson-Lucy / Fergus) | Prior-based |
+﻿# Computer Vision Restoration Project
 
 Pipeline:
 
 ```text
-degraded image -> restoration (AdaIR / UDPNet / HOGformer / Classic Filters) -> YOLO detection -> evaluation
+degraded image -> restoration (AdaIR / UDPNet / HOGFormer / classic filters) -> YOLO detection -> evaluation
 ```
-
----
 
 ## Repository Structure
 
 ```text
 Computer_vision/
-|-- configs/                  YAML parameter configs for classic filters
-|-- data/                     Data instructions only. Real datasets are not committed.
-|-- checkpoints/              Checkpoint instructions only. Real weights are not committed.
-|-- dl_nets/                  Network architectures adapted from paper repos
+|-- configs/                  YAML configs for classic filters and searches
+|-- data/                     Dataset instructions only
+|-- checkpoints/              Checkpoint instructions only
+|-- dl_nets/                  Network code adapted from paper repositories
 |   |-- AdaIR/
 |   |-- UDPNet/
-|   `-- HOGformer/
+|   `-- HOGFormer/
 |-- src/
-|   |-- datasets/             PyTorch dataset wrappers and restoration train/test loaders
-|   |-- detection/            YOLO detection runner and helpers
+|   |-- datasets/             Dataset wrappers and train/test loaders
+|   |-- detection/            YOLO detection helpers
 |   |-- metrics/              Image-quality and detection metrics
-|   |-- restoration/          Classic prior-based restoration filters
+|   |-- restoration/          Classic restoration filters
 |   |-- optimization/         Optuna objective functions
-|   |-- experiments/          Experiment and analysis entrypoints
-|   |-- training/             Training entrypoints and configs
-|   |-- pipelines/            End-to-end model pipelines
-|   |   `-- udpnet_pipeline/  UDPNet-specific pipeline utilities
-|   `-- utils/                Shared image, plotting, scheduler, and metric helpers
-|-- results/                  Selected figures/CSV files for report/slides
+|   |-- pipelines/            Multi-module method pipelines
+|   |   `-- udpnet/
+|   |-- experiments/          Experiment entrypoints grouped by method
+|   |   |-- adair/
+|   |   |-- udpnet/
+|   |   |-- hogformer/
+|   |   `-- classic/
+|   |-- training/             Main training entrypoints
+|   `-- utils/                Small reusable helpers
+|-- results/                  Selected report/slide artifacts only
+|-- outputs/                  Raw run outputs, ignored by Git
 |-- requirements.txt
 `-- .gitignore
 ```
 
----
+## Setup
 
-## Getting Started
-
-### Installation
-
-```bash
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
 pip install -r requirements.txt
 ```
 
-### Data Setup
+## Data And Checkpoints
 
-Download datasets and place them locally (see `data/README.md` for structure).
-All paths are passed through command-line arguments â€” no hardcoded paths.
+Real datasets and weights are not committed. See:
 
-### Checkpoint Setup
-
-Place model weights in `checkpoints/` (see `checkpoints/README.md` for layout).
-
----
-
-## Methods
-
-### 1. AdaIR â€” Adaptive Image Restoration
-
-AdaIR handles multiple degradation types (haze, rain, noise, snow, low-light) with a single model.
-
-**Train:**
-```bash
-python src/training/train_adair_original.py --adair-repo dl_nets/AdaIR --output-dir outputs/adair
+```text
+data/README.md
+checkpoints/README.md
 ```
 
-**Restore a single image:**
-```bash
-python src/experiments/adair_restore_single.py --input-image path/to/input.png --ckpt checkpoints/adair/adair5d.ckpt --output results/adair/restored.png
+Pass local paths through CLI arguments instead of hardcoding machine-specific paths.
+
+## AdaIR
+
+Train:
+
+```powershell
+python src/training/train_adair_original.py --adair-repo dl_nets/AdaIR --output-dir outputs/adair/train
 ```
 
-**Compare YOLO detection (before/after):**
-```bash
-python src/experiments/adair_compare_yolo.py --ckpt checkpoints/adair/adair5d.ckpt --data-dir path/to/data
+Restore one image:
+
+```powershell
+python src/experiments/adair/restore_single.py --input-image path/to/input.png --ckpt checkpoints/adair/adair5d.ckpt --output outputs/adair/restore_single/restored.png
 ```
 
-**Domain shift analysis:**
-```bash
-python src/experiments/adair_analyze_sots_vs_dawn_fog.py --sots-dir path/to/sots --dawn-fog-dir path/to/dawn/fog --output-dir results/adair/domain_shift/
-python src/experiments/adair_analyze_foggycity_vs_sots.py --foggycity-dir path/to/foggycity --sots-dir path/to/sots --output-dir results/adair/domain_shift/
-python src/experiments/adair_analyze_dawn_weather_shift.py --dawn-dir path/to/dawn --output-dir results/adair/domain_shift/
+Compare YOLO before and after restoration:
+
+```powershell
+python src/experiments/adair/compare_yolo.py --ckpt checkpoints/adair/adair5d.ckpt --input-dirs path/to/images --output-dir outputs/adair/yolo_compare
 ```
 
-### 2. UDPNet â€” Uncertainty-aware Dehazing
+Domain-shift analysis:
 
-UDPNet specializes in image dehazing using depth-aware uncertainty estimation.
+```powershell
+python src/experiments/adair/analyze_sots_vs_dawn_fog.py --sots-dir path/to/sots --dawn-fog-dir path/to/dawn/fog --output-dir results/adair/domain_shift/sots_vs_dawn_fog
+python src/experiments/adair/analyze_foggycity_vs_sots.py --foggycity-dir path/to/foggycity --sots-dir path/to/sots --output-dir results/adair/domain_shift/foggycity_vs_sots
+python src/experiments/adair/analyze_dawn_weather_shift.py --dawn-dir path/to/dawn --output-dir results/adair/domain_shift/dawn_weather
+```
 
-**Train:**
-```bash
+## UDPNet
+
+Train entrypoint:
+
+```powershell
 python src/training/train_udpnet_dehazing.py --config src/training/udpnet_pipeline.yaml
 ```
 
-**Evaluate pipeline:**
-```bash
-python src/experiments/udpnet_evaluate_pipeline.py --config src/training/udpnet_pipeline.yaml
+Pipeline experiments:
+
+```powershell
+python src/experiments/udpnet/evaluate_pipeline.py --config src/training/udpnet_pipeline.yaml
+python src/experiments/udpnet/scan_datasets.py --config src/training/udpnet_pipeline.yaml
+python src/experiments/udpnet/normalize_gt.py --config src/training/udpnet_pipeline.yaml
+python src/experiments/udpnet/generate_depthmaps.py --config src/training/udpnet_pipeline.yaml
+python src/experiments/udpnet/compare_panels.py --help
 ```
 
-**Other utilities:**
-```bash
-python src/experiments/udpnet_extract_foggycityscape.py --data-dir path/to/cityscapes
-python src/experiments/udpnet_generate_depthmaps.py --input-dir path/to/images
-python src/experiments/udpnet_compare_panels.py --results-dir path/to/results
-python src/experiments/udpnet_scan_datasets.py --data-dir path/to/datasets
-python src/experiments/udpnet_normalize_gt.py --input-dir path/to/gt
+## HOGFormer
+
+Train/evaluate:
+
+```powershell
+python src/training/train_hogformer_original.py --help
+python src/experiments/hogformer/test.py --ckpt-path checkpoints/hogformer/best.ckpt --output_path outputs/hogformer/test/
+python src/experiments/hogformer/evaluate_foggy.py --finetuned_ckpt checkpoints/hogformer/best.ckpt --data_root path/to/foggy/data --output_path outputs/hogformer/eval_foggy/
 ```
 
-### 3. HOGformer â€” HOG-based Transformer
+## Classic Filters
 
-HOGformer leverages Histogram of Oriented Gradients within a transformer architecture for image restoration.
+Prepare, optimize, evaluate, and generate report figures:
 
-**Train (standard):**
-```bash
-python src/training/train_hogformer_lightning.py
+```powershell
+python src/experiments/classic/prepare_data.py --help
+python src/experiments/classic/optuna_optimize.py --method dcp --config config1_reside_ssim --n-trials 20 --output-dir outputs/classic/optuna
+python src/experiments/classic/evaluate_all.py --yolo-weights checkpoints/yolo/yolo26n.pt --output-dir outputs/classic/evaluate_all
+python src/experiments/classic/visualize_paper_samples.py --yolo-weights checkpoints/yolo/yolo26n.pt
 ```
-
-**Train on foggy data:**
-```bash
-python src/training/train_hogformer_foggy.py --data-dir path/to/foggy/data
-```
-
-**Train with learning curves:**
-```bash
-python src/training/train_hogformer_curve.py
-```
-
-**Test:**
-```bash
-python src/experiments/test_hogformer.py --ckpt checkpoints/hogformer/best.ckpt
-```
-
-**Evaluate on foggy data:**
-```bash
-python src/experiments/evaluate_hogformer_foggy.py --ckpt checkpoints/hogformer/best.ckpt --data-dir path/to/foggy/data
-```
-
-### 4. Classic Prior-based Filters
-
-Classic image restoration methods with Optuna hyperparameter optimization.
-
-**Available methods:** DCP (dehazing), WMGF (deraining), LIME (low-light), BM3D (denoising), RBCP (desanding), Morphological Desnowing, Motion Deblur (Wiener / Richardson-Lucy / Fergus blind).
-
-**Data preparation:**
-```bash
-python src/experiments/prepare_data.py --dataset all
-```
-
-**Hyperparameter search with Optuna:**
-```bash
-python src/experiments/optuna_optimize.py --method <method_name> --config <config_name> --n-trials 20
-```
-- `method_name` choices: `dcp`, `wmgf`, `desnow`, `lime`, `bm3d`, `rbcp`, `motion`
-- `config_name` examples: `config1_reside_ssim`, `config2_dawn_brisque`, `config3_dawn_map50`
-
-**Full evaluation:**
-```bash
-python src/experiments/evaluate_all.py --yolo-weights checkpoints/yolo26n.pt
-```
-
-**Visual comparison grids:**
-```bash
-python src/experiments/visualize_paper_samples.py --yolo-weights checkpoints/yolo26n.pt
-```
-
----
 
 ## Conventions
 
-- `dl_nets/` contains network code adapted from paper repositories, with unnecessary docs/data/checkpoints removed.
-- `src/training/` contains main training files.
-- `src/experiments/` contains experiment, comparison, and analysis entrypoints.
-- `src/datasets/` contains dataset loaders; `src/utils/` contains reusable helper code only.
-- `results/` contains selected report artifacts only, not raw outputs.
-- `data/` and `checkpoints/` must not contain real files in Git.
-- All paths must be passed through parser arguments. Do not hardcode local paths.
-- Run scripts from the repository root so their path setup can find `src/` and `dl_nets/`.
-
+- `dl_nets/` contains paper network code needed for import/load only.
+- `src/training/` contains main training scripts.
+- `src/experiments/<method>/` contains experiment, demo, comparison, and analysis entrypoints.
+- `src/pipelines/` contains larger multi-module pipelines.
+- `src/utils/` contains small reusable helpers only.
+- `outputs/` is ignored and used for raw outputs.
+- `results/` contains selected report artifacts only.
+- `data/` and `checkpoints/` contain instructions, not real datasets or weights.

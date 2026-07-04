@@ -1,10 +1,17 @@
 import numpy as np
-import pyiqa
 import torch
 import cv2
+
+try:
+    import pyiqa
+except ImportError:
+    pyiqa = None
+
 _models = {}
 
 def _get_model(metric_name: str):
+    if pyiqa is None:
+        raise ImportError("pyiqa is required for no-reference metrics. Install it with: pip install pyiqa")
     global _models
     if metric_name not in _models:
         device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
@@ -14,9 +21,7 @@ def _get_model(metric_name: str):
 def _compute_iqa(image_bgr: np.ndarray, metric_name: str) -> float:
     try:
         model = _get_model(metric_name)
-        # Convert BGR to RGB
         img_rgb = image_bgr[:, :, ::-1].copy()
-        # Convert numpy array to torch tensor [B, C, H, W] in [0, 1]
         img_t = torch.from_numpy(img_rgb).permute(2, 0, 1).unsqueeze(0).float() / 255.0
         
         device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
@@ -30,20 +35,15 @@ def _compute_iqa(image_bgr: np.ndarray, metric_name: str) -> float:
         return float('nan')
 
 def compute_brisque(image: np.ndarray) -> float:
-    # Lower is better
     return _compute_iqa(image, 'brisque')
 
 def compute_niqe(image: np.ndarray) -> float:
-    # Lower is better
     return _compute_iqa(image, 'niqe')
 
 def compute_piqe(image: np.ndarray) -> float:
-    # Lower is better
     return _compute_iqa(image, 'piqe')
 
 def compute_entropy(image: np.ndarray) -> float:
-    # Supporting metric
-    # Convert to grayscale
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     hist = cv2.calcHist([gray], [0], None, [256], [0, 256])
     hist = hist / hist.sum()

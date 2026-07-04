@@ -2,7 +2,7 @@ import argparse
 import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[3]
 SRC_DIR = ROOT / "src"
 DL_NETS_DIR = ROOT / "dl_nets"
 sys.path.insert(0, str(SRC_DIR))

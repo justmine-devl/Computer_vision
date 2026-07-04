@@ -8,9 +8,8 @@ import shutil
 import argparse
 from pathlib import Path
 
-# Add project root and src directory to PYTHONPATH
 def get_project_root():
-    return Path(__file__).resolve().parents[2]
+    return Path(__file__).resolve().parents[3]
 
 ROOT = get_project_root()
 sys.path.insert(0, str(ROOT))
@@ -28,7 +27,6 @@ from src.metrics.full_reference import compute_ssim, compute_psnr
 from src.metrics.no_reference import compute_brisque, compute_niqe
 from src.detection.yolo_runner import YOLOEvaluator
 from src.metrics.detection import compute_mean_iou
-from ultralytics import YOLO
 
 def safe_compute(func, *args, **kwargs):
     """Safely compute a metric function, catching exceptions and wrapping NaN values."""
@@ -108,6 +106,8 @@ def eval_nr(dataset, cache_dir, quick_test=False):
 
 def eval_yolo(dataset, results_dir, yolo_weights_path, dataset_name="", quick_test=False):
     """Evaluate YOLO detection performance on restored images."""
+    from ultralytics import YOLO
+
     images_dir = os.path.join(results_dir, "images")
     labels_dir = os.path.join(results_dir, "labels")
     os.makedirs(images_dir, exist_ok=True)
@@ -201,6 +201,12 @@ def run_evaluation():
         action="store_true",
         help="Enable quick test mode to process only 2 samples per configuration."
     )
+    parser.add_argument(
+        "--output-dir",
+        type=str,
+        default="outputs/classic/evaluate_all",
+        help="Directory for raw evaluation outputs."
+    )
     args = parser.parse_args()
     
     base_dir = Path(args.project_root)
@@ -216,8 +222,11 @@ def run_evaluation():
     print(f"Using YOLO Weights: {yolo_weights_path}")
     print(f"Quick Test Mode: {quick_test}")
     
-    paper_tables_dir = base_dir / "paper" / "tables"
-    paper_figures_dir = base_dir / "paper" / "figures" / "detection"
+    output_dir = Path(args.output_dir)
+    if not output_dir.is_absolute():
+        output_dir = base_dir / output_dir
+    paper_tables_dir = output_dir / "tables"
+    paper_figures_dir = output_dir / "figures" / "detection"
     paper_tables_dir.mkdir(parents=True, exist_ok=True)
     paper_figures_dir.mkdir(parents=True, exist_ok=True)
     

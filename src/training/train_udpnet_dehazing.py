@@ -10,8 +10,8 @@ DL_NETS_DIR = ROOT / "dl_nets"
 sys.path.insert(0, str(SRC_DIR))
 sys.path.insert(0, str(DL_NETS_DIR))
 
-from pipelines.udpnet_pipeline.common.cli import apply_common_path_overrides
-from pipelines.udpnet_pipeline.common.config import load_yaml_config
+from pipelines.udpnet.common.cli import apply_common_path_overrides
+from pipelines.udpnet.common.config import load_yaml_config
 
 
 def parse_args() -> argparse.Namespace:

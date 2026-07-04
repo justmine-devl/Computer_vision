@@ -4,18 +4,15 @@ import yaml
 import json
 import csv
 import argparse
-import optuna
 import numpy as np
 import cv2
 from pathlib import Path
 
-# Add project root to path to ensure modules in src can be imported
 def get_project_root():
-    return Path(__file__).resolve().parents[2]
+    return Path(__file__).resolve().parents[3]
 
 sys.path.append(str(get_project_root()))
 
-# Import datasets
 from src.datasets.bsd_denoise_dataset import BSDDenoiseDataset
 from src.datasets.reside_dataset import ResideDataset
 from src.datasets.dawn_dataset import DawnDataset
@@ -24,44 +21,34 @@ from src.datasets.rain100H_dataset import PairedRainDataset
 from src.datasets.snow100k_dataset import Snow100kDataset
 from src.datasets.gopro_dataset import GoProDataset
 
-# Import BM3D objectives
 from src.optimization.bm3d.objective_bm3d_config1_specialized_ssim import objective_config1_specialized_ssim
 from src.optimization.bm3d.objective_bm3d_config2_specialized_brisque import objective_config2_specialized_brisque
 from src.optimization.bm3d.objective_bm3d_config1_mixed_ssim import objective_config1_mixed_ssim
 from src.optimization.bm3d.objective_bm3d_config2_mixed_brisque import objective_config2_mixed_brisque
 
-# Import DCP objectives
 from src.optimization.dcp.objective_reside_ssim import ObjectiveResideSSIM
 from src.optimization.dcp.objective_dawn_brisque import ObjectiveDawnBrisque as DCPObjectiveDawnBrisque
 from src.optimization.dcp.objective_dawn_map50 import ObjectiveDawnMap50 as DCPObjectiveDawnMap50
 
-# Import Desnow objectives
 from src.optimization.desnowing.objective_snow100k_ssim import ObjectiveSnow100KSSIM
 from src.optimization.desnowing.objective_dawn_brisque import ObjectiveDawnBrisque as DesnowObjectiveDawnBrisque
 from src.optimization.desnowing.objective_dawn_map50 import ObjectiveDawnMap50 as DesnowObjectiveDawnMap50
 
-# Import RBCP objectives
 from src.optimization.rbcp.objective_desand_config2_brisque import objective_desand_config2_brisque
 from src.optimization.rbcp.objective_desand_config3_map50 import objective_desand_config3_map50
 from src.restoration.rbcp_desand import RBCPDesandFilter
 
-# Import WMGF objectives
 from src.optimization.wmgf.objective_wmgf_config1_ssim import ObjectiveWMGFConfig1SSIM
 from src.optimization.wmgf.objective_wmgf_config2_brisque import ObjectiveWMGFConfig2Brisque
 from src.optimization.wmgf.objective_wmgf_config3_map50 import ObjectiveWMGFConfig3Map50
 from src.detection.yolo_runner import YOLOEvaluator
 
-# Import filters and metrics for inline objectives (LIME and Motion)
 from src.restoration.lime_delowlight import LIMEDeLowlightConfig, LIMEDeLowlightFilter
 from src.metrics.full_reference import compute_ssim
 from src.metrics.no_reference import compute_brisque
 from src.restoration.wiener_deblur import WienerMotionDeblurFilter
 from src.restoration.richardson_lucy_deblur import RichardsonLucyMotionDeblurFilter
 from src.restoration.fergus_blind_deblur import FergusBlindMotionDeblurFilter
-
-# -------------------------------------------------------------
-# Inline Objectives for LIME
-# -------------------------------------------------------------
 
 def sample_lime_config(trial):
     return LIMEDeLowlightConfig(
@@ -106,10 +93,6 @@ def get_lime_brisque_objective(dataset):
                 scores.append(score)
         return np.mean(scores) if scores else float('inf')
     return objective
-
-# -------------------------------------------------------------
-# Inline Objectives for Motion Deblur
-# -------------------------------------------------------------
 
 def get_motion_deblur_objective(dataset, metric="ssim"):
     def objective(trial):
@@ -182,10 +165,6 @@ def get_motion_deblur_objective(dataset, metric="ssim"):
         return np.mean(scores)
     return objective
 
-# -------------------------------------------------------------
-# Main Optimization Runner
-# -------------------------------------------------------------
-
 def main():
     parser = argparse.ArgumentParser(description="Unified Optuna optimization runner for ProjectCV.")
     parser.add_argument(
@@ -219,8 +198,15 @@ def main():
         default=20,
         help="Number of trials for Optuna optimization."
     )
+    parser.add_argument(
+        "--output-dir",
+        type=str,
+        default="outputs/classic/optuna",
+        help="Directory for Optuna trial outputs."
+    )
     args = parser.parse_args()
-    
+    import optuna
+
     root_path = Path(args.project_root)
     method = args.method
     config_name = args.config
@@ -239,7 +225,10 @@ def main():
     configs_dir = root_path / "configs" / method
     configs_dir.mkdir(parents=True, exist_ok=True)
     
-    optuna_results_dir = root_path / "results" / "optuna" / f"{method}_{config_name}"
+    optuna_results_dir = Path(args.output_dir)
+    if not optuna_results_dir.is_absolute():
+        optuna_results_dir = root_path / optuna_results_dir
+    optuna_results_dir = optuna_results_dir / f"{method}_{config_name}"
     optuna_results_dir.mkdir(parents=True, exist_ok=True)
     
     # 1. BM3D Optimization logic

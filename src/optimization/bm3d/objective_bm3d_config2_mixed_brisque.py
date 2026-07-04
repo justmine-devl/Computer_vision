@@ -1,10 +1,9 @@
-import optuna
 import numpy as np
 from src.restoration.bm3d_denoise import BM3DDenoiseFilter
 from src.metrics.no_reference import compute_brisque
 from src.optimization.bm3d.objective_bm3d_config1_specialized_ssim import sample_bm3d_config
 
-def objective_config2_mixed_brisque(trial: optuna.Trial, val_datasets_dict):
+def objective_config2_mixed_brisque(trial, val_datasets_dict):
     config = sample_bm3d_config(trial, noise_level="mixed")
     filt = BM3DDenoiseFilter(config)
 

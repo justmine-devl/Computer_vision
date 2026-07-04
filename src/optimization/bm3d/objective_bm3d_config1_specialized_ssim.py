@@ -1,9 +1,8 @@
-import optuna
 import numpy as np
 from src.restoration.bm3d_denoise import BM3DDenoiseFilter, BM3DDenoiseConfig
 from src.metrics.full_reference import compute_ssim
 
-def sample_bm3d_config(trial: optuna.Trial, noise_level):
+def sample_bm3d_config(trial, noise_level):
     if noise_level == 15:
         sigma_low, sigma_high = 0.02, 0.10
     elif noise_level == 25:
@@ -21,7 +20,7 @@ def sample_bm3d_config(trial: optuna.Trial, noise_level):
         profile="default",
     )
 
-def objective_config1_specialized_ssim(trial: optuna.Trial, noise_level, val_dataset):
+def objective_config1_specialized_ssim(trial, noise_level, val_dataset):
     config = sample_bm3d_config(trial, noise_level)
     filt = BM3DDenoiseFilter(config)
 

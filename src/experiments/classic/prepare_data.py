@@ -19,8 +19,8 @@ COCO_CLASS_TO_ID = {
 }
 
 def get_project_root():
-    # Detect project root relative to this script (two parent directories up from src/experiments)
-    return Path(__file__).resolve().parents[2]
+    # Detect project root relative to this script (three parent directories up from src/experiments/<group>)
+    return Path(__file__).resolve().parents[3]
 
 def convert_to_yolo(size, box):
     dw = 1. / size[0]

@@ -1,10 +1,9 @@
-import optuna
 import numpy as np
 from src.restoration.bm3d_denoise import BM3DDenoiseFilter
 from src.metrics.full_reference import compute_ssim
 from src.optimization.bm3d.objective_bm3d_config1_specialized_ssim import sample_bm3d_config
 
-def objective_config1_mixed_ssim(trial: optuna.Trial, val_datasets_dict):
+def objective_config1_mixed_ssim(trial, val_datasets_dict):
     config = sample_bm3d_config(trial, noise_level="mixed")
     filt = BM3DDenoiseFilter(config)
 

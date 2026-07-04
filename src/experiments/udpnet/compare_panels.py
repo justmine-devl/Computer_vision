@@ -14,7 +14,7 @@ except ImportError as exc:  # pragma: no cover - dependency guard
                 "Pillow is required. Install it with `pip install Pillow`."
         ) from exc
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[3]
 DEFAULT_RUNS = [
         ("yolo26n", ROOT / "outputs" / "UDPNet" / "FSNet_UDPNet_OTS_yolo26n"),
         ("yolov8n", ROOT / "outputs" / "UDPNet" / "FSNet_UDPNet_OTS_yolov8n"),

@@ -1,5 +1,5 @@
 ﻿# Data
 
-Do not commit datasets to GitHub.
+Do not commit real datasets to GitHub.
 
-Place datasets locally according to `sample_structure.txt`, or use another local layout and pass the correct path through parser arguments such as `--data-root`, `--sots-dir`, `--dawn-fog-dir`, or `--input-image`.
+Use the layout in `sample_structure.txt` when possible. If your local data uses a different layout, pass paths explicitly through parser arguments such as `--data-root`, `--input-dir`, `--input-image`, `--sots-dir`, `--dawn-fog-dir`, or `--foggycity-dir`.

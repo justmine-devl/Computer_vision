@@ -11,7 +11,7 @@ from pathlib import Path
 
 # Add project root to PYTHONPATH
 def get_project_root():
-    return Path(__file__).resolve().parents[2]
+    return Path(__file__).resolve().parents[3]
 
 ROOT = get_project_root()
 sys.path.insert(0, str(ROOT))

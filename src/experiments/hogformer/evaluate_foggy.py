@@ -18,9 +18,9 @@ from tqdm import tqdm
 from pathlib import Path
 import sys
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT / "src"))
-sys.path.insert(0, str(ROOT / "dl_nets" / "HOGformer"))
+sys.path.insert(0, str(ROOT / "dl_nets" / "HOGFormer"))
 
 from net.model import HOGformer
 from datasets.foggy_cityscapes_dataset import FoggyCityscapesDataset
@@ -232,7 +232,7 @@ def main() -> None:
     parser.add_argument('--fp16',       action='store_true', default=True)
     parser.add_argument('--no_fp16',    dest='fp16', action='store_false')
     parser.add_argument('--save_images',action='store_true', default=False)
-    parser.add_argument('--output_path',type=str, default='output/eval_foggy/')
+    parser.add_argument('--output_path',type=str, default='outputs/hogformer/eval_foggy/')
     parser.add_argument('--num_workers',type=int, default=2)
     args = parser.parse_args()
 

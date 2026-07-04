@@ -7,15 +7,15 @@ import sys
 from pathlib import Path
 from typing import Optional, Sequence
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[3]
 SRC_DIR = ROOT / "src"
 DL_NETS_DIR = ROOT / "dl_nets"
 sys.path.insert(0, str(SRC_DIR))
 sys.path.insert(0, str(DL_NETS_DIR))
 
-from pipelines.udpnet_pipeline.common.cli import add_common_path_args, apply_common_path_overrides
-from pipelines.udpnet_pipeline.common.config import load_yaml_config
-from pipelines.udpnet_pipeline.run.evaluate_pipeline import evaluate_pipeline
+from pipelines.udpnet.common.cli import add_common_path_args, apply_common_path_overrides
+from pipelines.udpnet.common.config import load_yaml_config
+from pipelines.udpnet.run.evaluate_pipeline import evaluate_pipeline
 
 def parse_args() -> argparse.Namespace:
         parser = argparse.ArgumentParser(

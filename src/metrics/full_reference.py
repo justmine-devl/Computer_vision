@@ -1,10 +1,17 @@
 import numpy as np
 from skimage.metrics import peak_signal_noise_ratio, structural_similarity, mean_squared_error
-import lpips
 import torch
+
+try:
+    import lpips
+except ImportError:
+    lpips = None
+
 _lpips_model = None
 
 def _get_lpips_model():
+    if lpips is None:
+        raise ImportError("lpips is required for compute_lpips. Install it with: pip install lpips")
     global _lpips_model
     if _lpips_model is None:
         device = "cuda" if torch.cuda.is_available() else "cpu"

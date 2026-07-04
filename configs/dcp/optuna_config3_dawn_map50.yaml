@@ -5,7 +5,7 @@ guided_eps: 0.0005193585357062233
 guided_radius: 40
 model:
   frozen: true
-  name: A:/HUST_on_GitHub/ProjectCV/yolo26n.pt
+  name: checkpoints/yolo/yolo26n.pt
 n_trials: 50
 objective: map50
 omega: 0.9400933916127887

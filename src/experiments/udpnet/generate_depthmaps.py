@@ -7,21 +7,20 @@ import sys
 from pathlib import Path
 from typing import Optional, Sequence
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[3]
 SRC_DIR = ROOT / "src"
 DL_NETS_DIR = ROOT / "dl_nets"
 sys.path.insert(0, str(SRC_DIR))
 sys.path.insert(0, str(DL_NETS_DIR))
 
-from pipelines.udpnet_pipeline.common.cli import add_common_path_args, apply_common_path_overrides
-from pipelines.udpnet_pipeline.common.config import load_yaml_config
-from pipelines.udpnet_pipeline.data.gt_normalize import normalize_ground_truth
+from pipelines.udpnet.common.cli import add_common_path_args, apply_common_path_overrides
+from pipelines.udpnet.common.config import load_yaml_config
+from pipelines.udpnet.depth.generate_depthmaps import generate_depthmaps_for_datasets
 
 def parse_args() -> argparse.Namespace:
         parser = argparse.ArgumentParser(
                 description=(
-                        "Normalize DAWN/RTTS (and future datasets) annotations into YOLO txt format "
-                        "using config-driven converters and class maps."
+                        "Generate depth maps for organized datasets by calling the bundled UDPNet depth helper."
                 )
         )
         parser.add_argument(
@@ -34,29 +33,35 @@ def parse_args() -> argparse.Namespace:
                 "--datasets",
                 nargs="*",
                 default=None,
-                help="Optional subset of datasets. Example: --datasets DAWN RTTS",
+                help="Optional subset. Example: --datasets DAWN RTTS",
         )
         parser.add_argument(
                 "--overwrite",
                 action="store_true",
-                help="Overwrite existing normalized labels.",
+                help="Regenerate even if output directory exists.",
         )
+        parser.add_argument(
+                "--dry-run",
+                action="store_true",
+                help="Plan only; do not run depth generation.",
+        )
+        parser.add_argument("--depth-weights", type=str, default=None, help="DepthAnything weights override.")
         add_common_path_args(parser)
         return parser.parse_args()
 
 
 def main() -> int:
         args = parse_args()
-        config_path = Path(args.config).expanduser().resolve()
-        config = load_yaml_config(config_path)
+        config = load_yaml_config(Path(args.config).expanduser().resolve())
         apply_common_path_overrides(config, args)
 
         selected: Optional[Sequence[str]] = args.datasets if args.datasets else None
 
-        summary = normalize_ground_truth(
+        summary = generate_depthmaps_for_datasets(
                 config=config,
                 selected_datasets=selected,
                 overwrite=args.overwrite,
+                dry_run=args.dry_run,
         )
 
         print(json.dumps(summary, indent=2))

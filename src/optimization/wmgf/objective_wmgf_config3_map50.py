@@ -44,8 +44,8 @@ class ObjectiveWMGFConfig3Map50:
                 
         temp_yaml_path = os.path.join(restored_dir, "temp_eval.yaml")
         lines = [
-            f"path: A:/HUST_on_GitHub/ProjectCV/data/dawn_rain",
-            f"train: A:/HUST_on_GitHub/ProjectCV/data/dawn_rain/images",
+            f"path: {restored_dir}",
+            f"train: {restored_images_dir}",
             f"val: {restored_images_dir}",
             f"names:",
             f"  0: person",

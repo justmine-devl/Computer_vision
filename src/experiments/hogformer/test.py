@@ -6,9 +6,9 @@ import subprocess
 from pathlib import Path
 import sys
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT / "src"))
-sys.path.insert(0, str(ROOT / "dl_nets" / "HOGformer"))
+sys.path.insert(0, str(ROOT / "dl_nets" / "HOGFormer"))
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -25,7 +25,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--denoise_path", type=str, default="data/Test/denoise/", help="test denoise data path")
     parser.add_argument("--derain_path", type=str, default="data/Test/derain/", help="test derain data path")
     parser.add_argument("--dehaze_path", type=str, default="data/Test/dehaze/", help="test dehaze data path")
-    parser.add_argument("--output_path", type=str, default="AdaIR3_results/", help="output save path")
+    parser.add_argument("--output_path", type=str, default="outputs/hogformer/test/", help="output save path")
     parser.add_argument("--ckpt-path", type=str, default="", help="checkpoint path override")
     parser.add_argument("--ckpt_name", type=str, default="adair3d.ckpt", help="checkpoint name under ckpt/")
     return parser

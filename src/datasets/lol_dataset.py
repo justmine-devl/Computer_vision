@@ -1,10 +1,11 @@
-import os
 import cv2
 from pathlib import Path
 
 class LOLDataset:
     def __init__(self, split_file=None, base_dir=None):
-        self.base_dir = base_dir if base_dir else "A:/HUST_on_GitHub/ProjectCV/data/lol"
+        if base_dir is None:
+            raise ValueError("base_dir is required. Example: --data-root data/lol")
+        self.base_dir = base_dir
         
         low_dir = Path(self.base_dir) / "eval15" / "low"
         high_dir = Path(self.base_dir) / "eval15" / "high"

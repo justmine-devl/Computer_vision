@@ -12,7 +12,7 @@ from pathlib import Path
 from typing import Dict, List, Optional, Sequence, Tuple
 from xml.etree import ElementTree as ET
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[3]
 SRC_DIR = ROOT / "src"
 DL_NETS_DIR = ROOT / "dl_nets"
 sys.path.insert(0, str(SRC_DIR))

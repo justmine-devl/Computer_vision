@@ -1,31 +1,26 @@
 ﻿data/
-├── phase1/
-│   ├── sots/
-│   │   ├── degraded/
-│   │   └── clean/
-│   ├── rain100l/
-│   │   ├── degraded/
-│   │   └── clean/
-│   ├── gopro/
-│   │   ├── degraded/
-│   │   └── clean/
-│   ├── lol/
-│   │   ├── degraded/
-│   │   └── clean/
-│   ├── bsd/
-│   │   ├── degraded/
-│   │   └── clean/
-│   └── snow100k/
-│       ├── degraded/
-│       └── clean/
-│
-└── phase2/
-    ├── dawn/
-    │   ├── images/
-    │   └── labels/
-    ├── rtts/
-    │   ├── images/
-    │   └── labels/
-    └── foggy_cityscapes/
-        ├── images/
-        └── labels/
+|-- DAWN/
+|   |-- Fog/
+|   |-- Rain/
+|   |-- Snow/
+|   `-- Sand/
+|-- RTTS/
+|-- Foggy_Cityscapes/
+|-- Train/
+|   |-- Denoise/
+|   |-- Deblur/
+|   |-- Enhance/
+|   |-- Derain/
+|   `-- Dehaze/
+|-- Test/
+|   |-- denoise/
+|   |-- deblur/
+|   |-- enhance/
+|   |-- derain/
+|   `-- dehaze/
+|-- reside6k/
+|-- rain100h/
+|-- snow100k/
+`-- lol/
+
+Alternative local layouts are allowed if the script receives the correct path arguments.

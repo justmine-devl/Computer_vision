@@ -10,9 +10,9 @@
 
 `src/optimization/` contains Optuna objective functions for hyperparameter search across restoration methods.
 
-`src/training/` contains main training files for all methods (AdaIR, UDPNet, HOGformer).
+`src/training/` contains main training files for all methods (AdaIR, UDPNet, HOGFormer).
 
-`src/experiments/` contains experiment, comparison, and analysis scripts. If code is only used once, keep it here.
+`src/experiments/<method>/` contains experiment, comparison, and analysis scripts. If code is only used once, keep it here.
 
 `src/utils/` contains reusable utilities. If code is reused by two or more scripts, move it here.
 
