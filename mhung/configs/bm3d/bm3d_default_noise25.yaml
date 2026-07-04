@@ -1,0 +1,4 @@
+name: bm3d_default_noise25
+sigma_psd: 0.0980392157
+stage_arg: all
+profile: default

@@ -1,0 +1,4 @@
+name: bm3d_config2_bsd15_brisque
+profile: default
+sigma_psd: 0.049138303751174305
+stage_arg: all

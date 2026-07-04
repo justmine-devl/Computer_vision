@@ -1,0 +1,86 @@
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+*.ipynb
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Large weights and models
+*.pt
+*.pth
+*.weights
+*.h5
+*.onnx
+*.engine
+
+# Outputs & intermediate results
+outputs/
+output/
+results/
+runs/
+wandb/
+
+# Paper results (only kept locally, not pushed to GitHub)
+paper/
+
+# Keep configuration directory structure but ignore actual datasets/data
+data/*
+!data/README.md
+
+checkpoints/*
+!checkpoints/README.md
+
+dataset/*
+!dataset/README.md
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+temp/
+.cache/
+.pytest_cache/

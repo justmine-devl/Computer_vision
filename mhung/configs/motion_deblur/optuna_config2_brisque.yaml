@@ -1,0 +1,5 @@
+method: richardson_lucy
+kernel_length: 3
+kernel_angle: 52.946783779568875
+num_iter: 57
+denoise_after: false

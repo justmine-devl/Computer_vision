@@ -1,0 +1,11 @@
+name: fergus_blind_motion_deblur_default
+method: fergus_blind_simplified
+kernel_type: motion
+kernel_length_candidates: [7, 11, 15, 21, 31]
+kernel_angle_candidates: [0, 30, 60, 90, 120, 150]
+deconv_method: wiener
+regularization_lambda: 0.01
+num_iter: 20
+selection_metric: brisque
+per_image_search: false
+clip_output: true

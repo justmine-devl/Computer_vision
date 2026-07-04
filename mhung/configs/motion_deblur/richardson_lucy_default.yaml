@@ -1,0 +1,8 @@
+name: richardson_lucy_motion_deblur_default
+method: richardson_lucy
+kernel_type: motion
+kernel_length: 15
+kernel_angle: 0.0
+num_iter: 20
+clip_output: true
+denoise_after: false

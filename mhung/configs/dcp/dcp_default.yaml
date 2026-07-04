@@ -1,0 +1,9 @@
+name: dcp_default
+patch_size: 15
+omega: 0.95
+t0: 0.10
+top_percent: 0.001
+guided_radius: 40
+guided_eps: 0.001
+gamma: 1.0
+clahe_clip: 0.0

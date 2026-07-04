@@ -1,0 +1,16 @@
+name: lime_delowlight_config2_brisque
+illumination_floor: 0.07423292571176872
+illumination_power: 0.5279260663000909
+guided_radius: 39
+guided_eps: 1.7593180754411055e-05
+exposure_gain: 1.7850129393925456
+gamma: 0.8603213250295084
+blend_alpha: 0.5533379304410393
+use_clahe: false
+clahe_clip: 1.1704918061968244
+clahe_tile_grid_size: 4
+use_denoise: true
+denoise_h: 1.6081772749929906
+denoise_h_color: 3.2805483605992127
+denoise_template_window: 5
+denoise_search_window: 15

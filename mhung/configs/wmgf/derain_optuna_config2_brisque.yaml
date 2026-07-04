@@ -1,0 +1,14 @@
+alpha: 0.8920625029881394
+clahe_clip: 1.9194811229415072
+direction: minimize
+gamma: 1.1645147578824975
+guided_eps: 0.00019190296369399936
+guided_radius: 24
+n_trials: 50
+noise_threshold_scale: 1.398788955557819
+range_sigma: 0.2824851376747495
+seed: 42
+spatial_sigma: 1.1571896519014064
+study_name: wmgf_derain_config2_brisque
+window_large: 9
+window_medium: 7

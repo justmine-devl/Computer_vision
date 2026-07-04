@@ -1,0 +1,14 @@
+alpha: 0.8273384225590488
+clahe_clip: 0.6827647570114815
+direction: maximize
+gamma: 1.198088973067671
+guided_eps: 0.09922195948103649
+guided_radius: 12
+n_trials: 50
+noise_threshold_scale: 0.6206943370579578
+range_sigma: 0.26082161510842006
+seed: 42
+spatial_sigma: 4.633011057935589
+study_name: wmgf_derain_config1_ssim
+window_large: 7
+window_medium: 5

@@ -1,0 +1,23 @@
+name: morph_guided_desnow_default
+
+color_space: hsv
+
+v_threshold: 0.82
+s_threshold: 0.25
+
+opening_kernel: 3
+closing_kernel: 3
+median_kernel: 3
+
+use_bilateral: true
+bilateral_d: 7
+sigma_color: 50
+sigma_space: 50
+
+use_guided_filter: true
+guided_radius: 8
+guided_eps: 0.01
+
+alpha: 0.7
+gamma: 1.0
+clahe_clip: 0.0

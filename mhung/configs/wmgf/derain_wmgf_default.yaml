@@ -1,0 +1,12 @@
+noise_window_size: 3
+window_small: 3
+window_medium: 5
+window_large: 7
+noise_threshold_scale: 1.0
+spatial_sigma: 2.0
+range_sigma: 0.10
+guided_radius: 8
+guided_eps: 0.01
+alpha: 1.0
+gamma: 1.0
+clahe_clip: 0.0

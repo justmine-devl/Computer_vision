@@ -1,0 +1,11 @@
+alpha: 0.6975281948228096
+clahe_clip: 2.305905188130216
+closing_kernel: 5
+gamma: 0.8836915760397692
+guided_eps: 0.0007965553749221577
+guided_radius: 15
+median_kernel: 5
+opening_kernel: 3
+s_threshold: 0.11332518486286935
+use_guided_filter: true
+v_threshold: 0.7912411465529037

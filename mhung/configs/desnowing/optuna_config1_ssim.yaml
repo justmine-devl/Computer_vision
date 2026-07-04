@@ -1,0 +1,13 @@
+alpha: 0.3814683253908596
+bilateral_d: 7
+clahe_clip: 0.003630295851314188
+closing_kernel: 1
+gamma: 1.0796971425373583
+median_kernel: 5
+opening_kernel: 3
+s_threshold: 0.3837591663737082
+sigma_color: 10.736686988333354
+sigma_space: 80.32384078793305
+use_bilateral: true
+use_guided_filter: false
+v_threshold: 0.5209766112764653

@@ -1,0 +1,16 @@
+name: lime_delowlight_config1_ssim
+illumination_floor: 0.10633140747516012
+illumination_power: 0.8799962879782331
+guided_radius: 40
+guided_eps: 0.0011782829092490316
+exposure_gain: 0.9192150629390703
+gamma: 1.6895856904368682
+blend_alpha: 0.653002574821829
+use_clahe: false
+clahe_clip: 1.0239917190717536
+clahe_tile_grid_size: 4
+use_denoise: true
+denoise_h: 5.396438372736016
+denoise_h_color: 7.337745588736363
+denoise_template_window: 7
+denoise_search_window: 15

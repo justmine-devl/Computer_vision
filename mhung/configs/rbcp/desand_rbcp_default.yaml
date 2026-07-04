@@ -1,0 +1,12 @@
+patch_size: 15
+omega: 0.95
+t0: 0.10
+top_percent: 0.001
+blue_reverse_strength: 1.0
+blue_gain: 1.10
+wb_strength: 0.5
+use_guided_filter: true
+guided_radius: 40
+guided_eps: 0.001
+gamma: 1.0
+clahe_clip: 0.0

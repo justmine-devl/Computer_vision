@@ -1,0 +1,9 @@
+name: wiener_motion_deblur_default
+method: wiener
+kernel_type: motion
+kernel_length: 15
+kernel_angle: 0.0
+regularization_lambda: 0.01
+post_sharpen: false
+post_sharpen_amount: 0.0
+clip_output: true

@@ -1,0 +1,4 @@
+name: bm3d_config1_bsd25_ssim
+profile: default
+sigma_psd: 0.09131790109208979
+stage_arg: all
