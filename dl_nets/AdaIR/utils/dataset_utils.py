@@ -8,8 +8,8 @@ from torch.utils.data import Dataset
 from torchvision.transforms import ToPILImage, Compose, RandomCrop, ToTensor
 import torch
 
-from adair_kaggle_adapt.AdaIR.utils.image_utils import random_augmentation, crop_img
-from adair_kaggle_adapt.AdaIR.utils.degradation_utils import Degradation
+from .image_utils import random_augmentation, crop_img
+from .degradation_utils import Degradation
 
     
 class AdaIRTrainDataset(Dataset):

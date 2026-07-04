@@ -72,7 +72,7 @@ def ensure_trailing_sep(path: str) -> str:
 def import_adair_components(adair_repo: Path):
     sys.path.insert(0, str(adair_repo))
     from net.model import AdaIR
-    from utils.dataset_utils import AdaIRTrainDataset
+    from datasets.adair_dataset import AdaIRTrainDataset
     from utils.schedulers import LinearWarmupCosineAnnealingLR
 
     return AdaIR, AdaIRTrainDataset, LinearWarmupCosineAnnealingLR

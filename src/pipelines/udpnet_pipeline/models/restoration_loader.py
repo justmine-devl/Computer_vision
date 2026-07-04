@@ -7,11 +7,11 @@ from typing import Any, Dict, Optional
 
 import torch
 
-from hưng.src.utils.udpnet_pipeline.common.device import (
+from ..common.device import (
         resolve_runtime_gpu_ids,
         resolve_runtime_torch_device,
 )
-from hưng.src.utils.udpnet_pipeline.common.paths import resolve_from_project_root
+from ..common.paths import resolve_from_project_root
 
 ConfigDict = Dict[str, Any]
 

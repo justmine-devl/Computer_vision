@@ -1,34 +1,4 @@
-"""
-foggy_dataset.py — Foggy Cityscapes dataset loader for HOGformer Setting III/IV fine-tuning.
-
-Folder layout expected on disk
--------------------------------
-data/foggy_cityscapes/
-    train/
-        input/      ← foggy images   (0001.png … 1000.png)
-        target/     ← clean GT images (0001.png … 1000.png)  ← SAME filenames
-    val/
-        input/
-        target/
-
-Naming convention
------------------
-Both input/ and target/ use identical numeric filenames:
-    input/0001.png   ↔  target/0001.png
-    input/0002.png   ↔  target/0002.png
-    ...
-    input/1000.png   ↔  target/1000.png
-
-No renaming or regex stripping is required — pairing is done by matching
-the exact filename in both directories.
-
-The loader follows the same interface as DerainDehazeDataset:
-  __getitem__ → ([name, de_type_id], degrad_tensor, clean_tensor)
-
-Run this file directly to verify the dataset:
-    python foggy_dataset.py --data_root data/foggy_cityscapes --split train
-"""
-
+"""Foggy Cityscapes paired dataset for HOGformer fine-tuning."""
 import os
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 import random
@@ -158,8 +128,8 @@ class FoggyCityscapesDataset(Dataset):
             raise FileNotFoundError(
                 f"Input directory not found: {input_dir}\n"
                 "Make sure you have created the folder structure:\n"
-                "  <data_root>/<split>/input/   ← foggy images\n"
-                "  <data_root>/<split>/target/  ← clean GT images"
+                "  <data_root>/<split>/input/   foggy images\n"
+                "  <data_root>/<split>/target/  clean GT images"
             )
         if not os.path.isdir(target_dir):
             raise FileNotFoundError(f"Target directory not found: {target_dir}")

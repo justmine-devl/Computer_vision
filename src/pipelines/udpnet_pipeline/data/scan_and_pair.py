@@ -7,7 +7,7 @@ import shutil
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional, Sequence, Set, Tuple
 
-from hưng.src.utils.udpnet_pipeline.common.paths import resolve_from_project_root, resolve_under
+from ..common.paths import resolve_from_project_root, resolve_under
 
 ConfigDict = Dict[str, Any]
 

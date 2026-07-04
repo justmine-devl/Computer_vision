@@ -10,7 +10,7 @@ try:
         from .depth_anything_v2.dpt import DepthAnythingV2
 except ImportError:  # direct script execution via subprocess
         sys.path.insert(0, str(Path(__file__).resolve().parent))
-        from hưng.src.utils.udpnet_pipeline.depth.depth_anything_v2.dpt import DepthAnythingV2
+        from depth_anything_v2.dpt import DepthAnythingV2
 
 SUPPORTED_EXTENSIONS = {
         ".jpg",

@@ -8,7 +8,7 @@ from xml.etree import ElementTree as ET
 
 from PIL import Image
 
-from hưng.src.utils.udpnet_pipeline.common.paths import resolve_from_project_root
+from ..common.paths import resolve_from_project_root
 
 ConfigDict = Dict[str, Any]
 

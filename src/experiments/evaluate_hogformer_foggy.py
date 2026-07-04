@@ -1,32 +1,3 @@
-"""
-evaluate_foggy.py — Compare pretrained vs fine-tuned HOGformer on Foggy Cityscapes.
-
-Measures PSNR, SSIM, and LPIPS for:
-  (A) Pretrained model  (adair5d.ckpt)
-  (B) Fine-tuned model  (best_psnr.pth / best_ssim.pth / latest.pth)
-
-Output
-------
-* Console table with per-image and aggregate metrics
-* TXT report saved to <output_path>/eval_report.txt
-* Restored images optionally saved to <output_path>/pretrained/ and <output_path>/finetuned/
-
-Usage
------
-  # Compare both models on the val split
-  python evaluate_foggy.py \\
-      --pretrained_ckpt  ckpt/adair5d.ckpt \\
-      --finetuned_ckpt   finetune_checkpoints/foggy/best_psnr.pth \\
-      --data_root        data/foggy_cityscapes \\
-      --split            val
-
-  # Evaluate only the fine-tuned model (skip pretrained)
-  python evaluate_foggy.py --finetuned_ckpt finetune_checkpoints/foggy/best_psnr.pth
-
-  # Save restored images
-  python evaluate_foggy.py --save_images --output_path output/eval/
-"""
-
 import os
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 import argparse
@@ -52,7 +23,7 @@ sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "dl_nets" / "HOGformer"))
 
 from net.model import HOGformer
-from utils.foggy_dataset import FoggyCityscapesDataset
+from datasets.foggy_cityscapes_dataset import FoggyCityscapesDataset
 from utils.image_utils import crop_img
 
 # ── optional LPIPS ───────────────────────────────────────────────────────────

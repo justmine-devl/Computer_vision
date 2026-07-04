@@ -9,29 +9,29 @@ import torch
 from torch.utils.data import DataLoader
 from torch.utils.data import Subset
 
-from hưng.src.utils.udpnet_pipeline.common.paths import resolve_from_project_root
-from hưng.src.utils.udpnet_pipeline.data.yolo_dataset import OrganizedYoloDataset, collate_eval_batch
-from hưng.src.utils.udpnet_pipeline.eval.metrics import (
+from ..common.paths import resolve_from_project_root
+from ..data.yolo_dataset import OrganizedYoloDataset, collate_eval_batch
+from ..eval.metrics import (
         compute_map,
         extract_predictions_from_ultralytics,
         mean_iou_all_gt,
         mean_iou_matched,
         mean_iou_tp50,
 )
-from hưng.src.utils.udpnet_pipeline.eval.report import write_metrics_report
-from hưng.src.utils.udpnet_pipeline.eval.visualize import save_visual_batch
-from hưng.src.utils.udpnet_pipeline.eval import label_io
-from hưng.src.utils.udpnet_pipeline.run.metrics_utils import compute_psnr, compute_ssim
-from hưng.src.utils.udpnet_pipeline.run.summary_utils import aggregate_dataset_means, summarize_scalar_series
-import hưng.src.utils.udpnet_pipeline.eval.metrics as eval_metrics
+from ..eval.report import write_metrics_report
+from ..eval.visualize import save_visual_batch
+from ..eval import label_io
+from .metrics_utils import compute_psnr, compute_ssim
+from .summary_utils import aggregate_dataset_means, summarize_scalar_series
+from ..eval import metrics as eval_metrics
 from collections import defaultdict
 import csv
 import json
-from hưng.src.utils.udpnet_pipeline.models.detection_loader import (
+from ..models.detection_loader import (
         DetectionModelLoader,
         load_detection_inference_settings,
 )
-from hưng.src.utils.udpnet_pipeline.models.restoration_loader import RestorationModelLoader
+from ..models.restoration_loader import RestorationModelLoader
 
 ConfigDict = Dict[str, Any]
 

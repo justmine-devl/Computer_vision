@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 import argparse
 import sys
@@ -10,8 +10,8 @@ DL_NETS_DIR = ROOT / "dl_nets"
 sys.path.insert(0, str(SRC_DIR))
 sys.path.insert(0, str(DL_NETS_DIR))
 
-from hưng.src.utils.udpnet_pipeline.common.cli import apply_common_path_overrides
-from hưng.src.utils.udpnet_pipeline.common.config import load_yaml_config
+from pipelines.udpnet_pipeline.common.cli import apply_common_path_overrides
+from pipelines.udpnet_pipeline.common.config import load_yaml_config
 
 
 def parse_args() -> argparse.Namespace:
@@ -59,3 +59,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+

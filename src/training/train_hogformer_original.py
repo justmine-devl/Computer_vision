@@ -16,13 +16,13 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "dl_nets" / "HOGformer"))
 
-from utils.dataset_utils import AdaIRTrainDataset
+from datasets.adair_dataset import AdaIRTrainDataset
 from net.model import HOGformer as AdaIR
 from utils.schedulers import LinearWarmupCosineAnnealingLR
 from utils.options import options as opt
 
 # Conditional imports for Foggy Cityscapes
-from utils.foggy_dataset import build_foggy_datasets
+from datasets.foggy_cityscapes_dataset import build_foggy_datasets
 from skimage.metrics import peak_signal_noise_ratio, structural_similarity
 
 try:

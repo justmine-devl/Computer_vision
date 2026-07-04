@@ -10,6 +10,31 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "dl_nets" / "HOGformer"))
 
+
+def build_parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--cuda", type=int, default=0)
+    parser.add_argument(
+        "--mode",
+        type=int,
+        default=5,
+        help="0 for denoise, 1 for derain, 2 for dehaze, 3 for deblur, 4 for enhance, 5 for all-in-one (three tasks), 6 for all-in-one (five tasks)",
+    )
+    parser.add_argument("--gopro_path", type=str, default="data/Test/deblur/", help="test deblur data path")
+    parser.add_argument("--enhance_path", type=str, default="data/Test/enhance/", help="test enhance data path")
+    parser.add_argument("--denoise_path", type=str, default="data/Test/denoise/", help="test denoise data path")
+    parser.add_argument("--derain_path", type=str, default="data/Test/derain/", help="test derain data path")
+    parser.add_argument("--dehaze_path", type=str, default="data/Test/dehaze/", help="test dehaze data path")
+    parser.add_argument("--output_path", type=str, default="AdaIR3_results/", help="output save path")
+    parser.add_argument("--ckpt-path", type=str, default="", help="checkpoint path override")
+    parser.add_argument("--ckpt_name", type=str, default="adair3d.ckpt", help="checkpoint name under ckpt/")
+    return parser
+
+
+if __name__ == "__main__" and any(arg in ("-h", "--help") for arg in sys.argv[1:]):
+    build_parser().parse_args()
+    raise SystemExit(0)
+
 import lightning.pytorch as pl
 import numpy as np
 import torch
@@ -18,9 +43,8 @@ import torch.nn.functional as F
 from torch.utils.data import DataLoader
 from tqdm import tqdm
 
-# from net.model import AdaIR
 from net.model import HOGformer as AdaIR
-from utils.dataset_utils import DenoiseTestDataset, DerainDehazeDataset
+from datasets.adair_dataset import DenoiseTestDataset, DerainDehazeDataset
 from utils.image_io import save_image_tensor
 from utils.val_utils import AverageMeter, compute_psnr_ssim
 
@@ -281,60 +305,14 @@ def test_Derain_Dehaze(net, dataset, task="derain"):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    # Input Parameters
-    parser.add_argument("--cuda", type=int, default=0)
-    parser.add_argument(
-        "--mode",
-        type=int,
-        default=5,
-        help="0 for denoise, 1 for derain, 2 for dehaze, 3 for deblur, 4 for enhance, 5 for all-in-one (three tasks), 6 for all-in-one (five tasks)",
-    )
-
-    parser.add_argument(
-        "--gopro_path",
-        type=str,
-        default="/data1/wjw/all_in_one_set2/Test/deblur/",
-        help="save path of test hazy images",
-    )
-    parser.add_argument(
-        "--enhance_path",
-        type=str,
-        default="/data1/wjw/all_in_one_set2/Test/enhance/",
-        help="save path of test hazy images",
-    )
-    parser.add_argument(
-        "--denoise_path",
-        type=str,
-        default="/data1/wjw/all_in_one_set2/Test/denoise/",
-        help="save path of test noisy images",
-    )
-    parser.add_argument(
-        "--derain_path",
-        type=str,
-        default="/data1/wjw/all_in_one_set2/Test/derain/",
-        help="save path of test raining images",
-    )
-    parser.add_argument(
-        "--dehaze_path",
-        type=str,
-        default="/data1/wjw/all_in_one_set2/Test/dehaze/",
-        help="save path of test hazy images",
-    )
-
-    parser.add_argument(
-        "--output_path", type=str, default="AdaIR3_results/", help="output save path"
-    )
-    parser.add_argument(
-        "--ckpt_name", type=str, default="adair3d.ckpt", help="checkpoint save path"
-    )
+    parser = build_parser()
     testopt = parser.parse_args()
 
     np.random.seed(0)
     torch.manual_seed(0)
     torch.cuda.set_device(testopt.cuda)
 
-    ckpt_path = "ckpt/" + testopt.ckpt_name
+    ckpt_path = testopt.ckpt_path or str(Path("ckpt") / testopt.ckpt_name)
 
     denoise_splits = ["bsd68/"]
     derain_splits = ["Rain100L/"]

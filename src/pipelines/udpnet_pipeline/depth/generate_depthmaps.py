@@ -5,7 +5,7 @@ import sys
 from pathlib import Path
 from typing import Any, Dict, Optional, Sequence
 
-from hưng.src.utils.udpnet_pipeline.common.paths import resolve_from_project_root
+from ..common.paths import resolve_from_project_root
 
 ConfigDict = Dict[str, Any]
 

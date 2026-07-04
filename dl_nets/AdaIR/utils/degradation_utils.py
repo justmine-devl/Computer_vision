@@ -5,7 +5,7 @@ from PIL import Image
 import random
 import numpy as np
 
-from adair_kaggle_adapt.AdaIR.utils.image_utils import crop_img
+from .image_utils import crop_img
 
 
 class Degradation(object):
