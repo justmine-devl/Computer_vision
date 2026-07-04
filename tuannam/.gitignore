@@ -1,0 +1,67 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Environments and Virtual Envs
+.env
+.venv
+env/
+venv/
+ENV/
+env.yaml
+requirements.txt
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# OS generated files
+desktop.ini
+**/desktop.ini
+Thumbs.db
+.DS_Store
+
+# --- Computer Vision Repo Standard Gitignore Rules ---
+
+# Data constraints
+data/*
+!data/README.md
+!data/sample_structure.txt
+data_dir/
+
+# Checkpoint constraints
+checkpoints/*
+!checkpoints/README.md
+finetune_checkpoints/
+ckpt/
+*.ckpt
+*.pth
+*.pt
+*.onnx
+*.engine
+
+# Output and run logs
+outputs/
+output/
+runs/
+wandb/
+logs/
+
+# Results exclusions for heavy outputs
+results/**/raw_images/
+results/**/restored_images/
+results/**/detections/
+results/**/*.mp4
+results/**/*.avi
+
+# Exclude any nested data/ckpt/results in deep learning packages
+dl_nets/**/__pycache__/
+dl_nets/**/.git/
+dl_nets/**/ckpt/
+dl_nets/**/checkpoints/
+dl_nets/**/data_dir/
+dl_nets/**/results/
+dl_nets/**/outputs/
