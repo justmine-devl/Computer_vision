@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from typing import Any, Dict
 
-from ..common.device import resolve_detection_device_arg
-from ..common.paths import resolve_from_project_root
+from utils.device import resolve_detection_device_arg
+from utils.paths import resolve_from_project_root
 
 ConfigDict = Dict[str, Any]
 

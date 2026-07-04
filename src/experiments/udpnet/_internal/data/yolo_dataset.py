@@ -9,7 +9,7 @@ import numpy as np
 import torch
 from torch.utils.data import Dataset
 
-from ..common.paths import resolve_from_project_root
+from utils.paths import resolve_from_project_root
 
 ConfigDict = Dict[str, Any]
 

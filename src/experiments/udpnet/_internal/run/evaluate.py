@@ -9,9 +9,9 @@ import torch
 from torch.utils.data import DataLoader
 from torch.utils.data import Subset
 
-from ..common.paths import resolve_from_project_root
+from utils.paths import resolve_from_project_root
 from ..data.yolo_dataset import OrganizedYoloDataset, collate_eval_batch
-from ..eval.metrics import (
+from metrics.detection import (
         compute_map,
         extract_predictions_from_ultralytics,
         mean_iou_all_gt,
@@ -21,17 +21,17 @@ from ..eval.metrics import (
 from ..eval.report import write_metrics_report
 from ..eval.visualize import save_visual_batch
 from ..eval import label_io
-from .metrics_utils import compute_psnr, compute_ssim
-from .summary_utils import aggregate_dataset_means, summarize_scalar_series
-from ..eval import metrics as eval_metrics
+from .image_metrics import compute_psnr, compute_ssim
+from .summary import aggregate_dataset_means, summarize_scalar_series
+from metrics import detection as eval_metrics
 from collections import defaultdict
 import csv
 import json
-from ..models.detection_loader import (
+from ..runtime.detection import (
         DetectionModelLoader,
         load_detection_inference_settings,
 )
-from ..models.restoration_loader import RestorationModelLoader
+from ..runtime.restoration import RestorationModelLoader
 
 ConfigDict = Dict[str, Any]
 

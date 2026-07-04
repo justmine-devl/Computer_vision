@@ -7,7 +7,7 @@ import shutil
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional, Sequence, Set, Tuple
 
-from ..common.paths import resolve_from_project_root, resolve_under
+from utils.paths import resolve_from_project_root, resolve_under
 
 ConfigDict = Dict[str, Any]
 

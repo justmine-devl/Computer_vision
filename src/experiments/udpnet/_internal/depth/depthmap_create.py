@@ -6,11 +6,12 @@ import cv2
 import numpy as np
 import torch
 
-try:
-        from .depth_anything_v2.dpt import DepthAnythingV2
-except ImportError:  # direct script execution via subprocess
-        sys.path.insert(0, str(Path(__file__).resolve().parent))
-        from depth_anything_v2.dpt import DepthAnythingV2
+REPO_ROOT = Path(__file__).resolve().parents[5]
+UDP_NET_ROOT = REPO_ROOT / "dl_nets" / "UDPNet"
+if str(UDP_NET_ROOT) not in sys.path:
+        sys.path.insert(0, str(UDP_NET_ROOT))
+
+from depth_anything_v2.dpt import DepthAnythingV2
 
 SUPPORTED_EXTENSIONS = {
         ".jpg",

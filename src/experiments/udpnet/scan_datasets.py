@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env python3
+#!/usr/bin/env python3
 from __future__ import annotations
 
 import argparse
@@ -13,9 +13,9 @@ DL_NETS_DIR = ROOT / "dl_nets"
 sys.path.insert(0, str(SRC_DIR))
 sys.path.insert(0, str(DL_NETS_DIR))
 
-from pipelines.udpnet.common.cli import add_common_path_args, apply_common_path_overrides
-from pipelines.udpnet.common.config import load_yaml_config
-from pipelines.udpnet.data.scan_and_pair import scan_and_pair_datasets
+from experiments.udpnet._internal.args import add_common_path_args, apply_common_path_overrides
+from utils.config import load_yaml_config
+from experiments.udpnet._internal.data.scan_and_pair import scan_and_pair_datasets
 
 def parse_args() -> argparse.Namespace:
         parser = argparse.ArgumentParser(

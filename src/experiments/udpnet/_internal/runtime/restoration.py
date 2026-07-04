@@ -7,11 +7,11 @@ from typing import Any, Dict, Optional
 
 import torch
 
-from ..common.device import (
+from utils.device import (
         resolve_runtime_gpu_ids,
         resolve_runtime_torch_device,
 )
-from ..common.paths import resolve_from_project_root
+from utils.paths import resolve_from_project_root
 
 ConfigDict = Dict[str, Any]
 

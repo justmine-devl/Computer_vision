@@ -1,1 +1,0 @@
-"""Depth map generation helpers."""

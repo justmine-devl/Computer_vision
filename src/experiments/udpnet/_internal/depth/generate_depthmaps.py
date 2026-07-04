@@ -5,7 +5,7 @@ import sys
 from pathlib import Path
 from typing import Any, Dict, Optional, Sequence
 
-from ..common.paths import resolve_from_project_root
+from utils.paths import resolve_from_project_root
 
 ConfigDict = Dict[str, Any]
 
