@@ -1,50 +1,112 @@
-﻿# Windows / system
+# ============================================================
+# Merged .gitignore — Computer_vision
+# Sources: root, mhung, tuannam
+# ============================================================
+
+# ----- Windows / macOS / system -----
 desktop.ini
 **/desktop.ini
 Thumbs.db
 .DS_Store
 
-# Python
+# ----- IDE / editor -----
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ----- Python bytecode & artifacts -----
 __pycache__/
 *.py[cod]
+*$py.class
+*.so
+.Python
+MANIFEST
+
+# ----- Python packaging / distribution -----
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+pip-log.txt
+pip-delete-this-directory.txt
+
+# ----- Notebooks -----
+*.ipynb
 .ipynb_checkpoints/
+
+# ----- Testing / linting / type-checking -----
 .pytest_cache/
 .mypy_cache/
 
-# Environments
+# ----- Virtual environments -----
 .venv/
 venv/
 env/
+ENV/
+env.yaml
 .env
+.env.local
+.env.*.local
 
-# Data
+# ----- Data -----
 data/*
 !data/README.md
 !data/sample_structure.txt
+data_dir/
+dataset/*
+!dataset/README.md
 
-# Checkpoints / weights
+# ----- Checkpoints / weights -----
 checkpoints/*
 !checkpoints/README.md
+finetune_checkpoints/
+ckpt/
 *.ckpt
 *.pth
 *.pt
 *.onnx
 *.engine
+*.weights
+*.h5
 
-# Raw outputs
+# ----- Raw outputs & runs -----
 outputs/
 output/
 runs/
 wandb/
 
-# Heavy generated results
+# ----- Results (granular) -----
 results/**/raw_images/
 results/**/restored_images/
 results/**/detections/
 results/**/*.mp4
 results/**/*.avi
 
-# External unnecessary generated files
+# ----- Logs & temp files -----
+*.log
+logs/
+*.tmp
+*.temp
+temp/
+.cache/
+
+# ----- Miscellaneous -----
+paper/
+
+# ----- dl_nets sub-projects (generated / heavy) -----
 dl_nets/**/__pycache__/
 dl_nets/**/.git/
 dl_nets/**/ckpt/

@@ -1,0 +1,43 @@
+# =============================================================================
+# Computer Vision Project - Requirements
+# =============================================================================
+
+# --- Deep Learning Frameworks ---
+torch
+torchvision
+lightning                # HOGformer training (lightning.pytorch)
+ultralytics>=8.0.0       # YOLO object detection
+
+# --- Core Scientific Stack ---
+numpy
+pandas
+scipy
+
+# --- Image Processing ---
+opencv-python
+Pillow
+scikit-image
+
+# --- Image Quality & Perceptual Metrics ---
+lpips
+pyiqa
+torchmetrics>=1.3.0
+pycocotools>=2.0.7
+
+# --- Transformer / Model Utilities ---
+einops                   # Tensor rearrangement for transformer models
+
+# --- Visualization ---
+matplotlib
+seaborn
+
+# --- Configuration & Utilities ---
+pyyaml
+tqdm
+
+# --- Experiment Tracking & Hyperparameter Optimization ---
+wandb                    # Optional: experiment logging
+optuna                   # Hyperparameter optimization
+
+# --- Misc ---
+timm                     # Pre-trained vision models (commonly used by AdaIR/HOGformer)

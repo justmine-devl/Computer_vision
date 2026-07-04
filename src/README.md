@@ -1,6 +1,16 @@
-﻿# Source Layout
+# Source Layout
 
-`src/training/` contains main training files.
+`src/datasets/` contains PyTorch-like dataset wrappers for loading images (RESIDE, GoPro, LOL, DAWN, BSD, Snow100K, etc.).
+
+`src/detection/` contains YOLO detection runner and helpers.
+
+`src/metrics/` contains image quality metrics: full-reference (PSNR, SSIM), no-reference (BRISQUE, NIQE), and detection (mAP).
+
+`src/restoration/` contains classic prior-based restoration filter implementations (DCP, WMGF, LIME, BM3D, RBCP, Desnowing, Motion Deblur).
+
+`src/optimization/` contains Optuna objective functions for hyperparameter search across restoration methods.
+
+`src/training/` contains main training files for all methods (AdaIR, UDPNet, HOGformer).
 
 `src/experiments/` contains experiment, comparison, and analysis scripts. If code is only used once, keep it here.
 

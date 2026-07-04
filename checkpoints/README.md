@@ -1,4 +1,4 @@
-﻿# Checkpoints
+# Checkpoints
 
 Do not commit checkpoints or model weights to GitHub.
 
@@ -8,8 +8,13 @@ Example local layout:
 
 ```text
 checkpoints/
-└── adair/
-    ├── adair-single-dehaze.ckpt
-    ├── adair3d.ckpt
-    └── adair5d.ckpt
+├── adair/
+│   ├── adair-single-dehaze.ckpt
+│   ├── adair3d.ckpt
+│   └── adair5d.ckpt
+├── udpnet/
+│   └── udpnet_dehazing.pth
+├── hogformer/
+│   └── best.ckpt
+└── yolo26n.pt
 ```
