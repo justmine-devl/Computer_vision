@@ -1,0 +1,54 @@
+﻿# Windows / system
+desktop.ini
+**/desktop.ini
+Thumbs.db
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.pytest_cache/
+.mypy_cache/
+
+# Environments
+.venv/
+venv/
+env/
+.env
+
+# Data
+data/*
+!data/README.md
+!data/sample_structure.txt
+
+# Checkpoints / weights
+checkpoints/*
+!checkpoints/README.md
+*.ckpt
+*.pth
+*.pt
+*.onnx
+*.engine
+
+# Raw outputs
+outputs/
+output/
+runs/
+wandb/
+
+# Heavy generated results
+results/**/raw_images/
+results/**/restored_images/
+results/**/detections/
+results/**/*.mp4
+results/**/*.avi
+
+# External unnecessary generated files
+dl_nets/**/__pycache__/
+dl_nets/**/.git/
+dl_nets/**/ckpt/
+dl_nets/**/checkpoints/
+dl_nets/**/data_dir/
+dl_nets/**/results/
+dl_nets/**/outputs/
