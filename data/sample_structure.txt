@@ -1,0 +1,31 @@
+﻿data/
+├── phase1/
+│   ├── sots/
+│   │   ├── degraded/
+│   │   └── clean/
+│   ├── rain100l/
+│   │   ├── degraded/
+│   │   └── clean/
+│   ├── gopro/
+│   │   ├── degraded/
+│   │   └── clean/
+│   ├── lol/
+│   │   ├── degraded/
+│   │   └── clean/
+│   ├── bsd/
+│   │   ├── degraded/
+│   │   └── clean/
+│   └── snow100k/
+│       ├── degraded/
+│       └── clean/
+│
+└── phase2/
+    ├── dawn/
+    │   ├── images/
+    │   └── labels/
+    ├── rtts/
+    │   ├── images/
+    │   └── labels/
+    └── foggy_cityscapes/
+        ├── images/
+        └── labels/
