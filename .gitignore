@@ -52,3 +52,6 @@ dl_nets/**/checkpoints/
 dl_nets/**/data_dir/
 dl_nets/**/results/
 dl_nets/**/outputs/
+dl_nets/**/data/
+dl_nets/**/Datasets/
+dl_nets/**/weights/

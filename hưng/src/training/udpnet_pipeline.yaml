@@ -1,0 +1,128 @@
+project:
+    name: UDPNet
+    colab_mode: false
+    local_root: "."
+    colab_root: "."
+
+runtime:
+    device: "auto"
+    # Optional multi-GPU controls (backward-compatible):
+    # gpu_ids: [0, 1]
+    # enable_data_parallel: true
+    num_workers: 2
+    seed: 42
+
+vram:
+    batch_size: 1
+    image_resolution: [960, 960]
+
+paths:
+    datasets_root: "data"
+    organized_root: "data/organized/UDPNet"
+    outputs_root: "outputs/UDPNet"
+
+restoration:
+    enabled: true
+    model_module: "UDPNet.models.FSNet_UDPNet"
+    build_function: "build_net"
+    checkpoint: "checkpoints/UDPNet/FSNet_UDPNet_OTS.ckpt"
+    use_depth: true
+    output_index: -1
+    strict_state_dict: false
+
+detection:
+    weights: "checkpoints/yolo/yolov8n.pt"
+    imgsz: 960
+    conf_threshold: 0.25
+    nms_iou_threshold: 0.70
+    max_det: 300
+
+evaluation:
+    max_images: 0 # 0 = use all
+    detector_input_mode: "file_path" # file_path | tensor
+    save_restored_full_resolution: true
+    restored_image_format: "png"
+    restore_output_interpolation: "lanczos"
+    map_class_set: "gt_union_pred" # gt_only | gt_union_pred
+    iou_primary: "all_gt" # all_gt | matched | tp50
+    # max_visuals may be an integer (applies per-dataset) or a mapping
+    # e.g. max_visuals: { DAWN: 50, RTTS: 20 }
+    max_visuals: 0
+    metrics:
+        use_multichannel_ssim: false
+    map_iou_thresholds: [0.50, 0.55, 0.60, 0.65, 0.70, 0.75, 0.80, 0.85, 0.90, 0.95]
+
+normalization:
+    output_label_dir_name: "labels_yolo"
+    skip_unknown_classes: true
+    clamp_boxes: true
+    yolo_txt_assume_normalized: true
+
+datasets:
+    active:
+        - DAWN
+        - RTTS
+        - FoggyCityscape
+
+    scan:
+        link_mode: "copy" # symlink | hardlink | copy
+        overwrite: false
+
+    entries:
+        DAWN:
+            annotation_format: "yolo_txt"
+            root: "data/DAWN"
+            image_dir: "images"
+            label_dir: "labels"
+            split: "all"
+            include_filename_prefixes: ["haze", "foggy"]
+            image_extensions: [".jpg", ".jpeg", ".png", ".bmp", ".webp"]
+            label_extensions: [".txt"]
+            # DAWN YOLO labels use non-COCO numeric ids. Remap them to COCO ids
+            # used by Ultralytics YOLO predictions.
+            class_map:
+                "1": 0 # person
+                "2": 1 # bicycle
+                "3": 2 # car
+                "4": 3 # motorcycle
+                "6": 5 # bus
+                "8": 7 # truck
+
+        RTTS:
+            annotation_format: "voc_xml"
+            root: "data/RTTS"
+            image_dir: "JPEGImages"
+            label_dir: "Annotations"
+            split_file: "ImageSets/Main/test.txt"
+            split: "test"
+            image_extensions: [".jpg", ".jpeg", ".png", ".bmp", ".webp"]
+            label_extensions: [".xml"]
+            class_map:
+                person: 0
+                bicycle: 1
+                car: 2
+                motorbike: 3
+                motorcycle: 3
+                bus: 5
+
+        FoggyCityscape:
+            annotation_format: "voc_xml"
+            root: "data/FoggyCityscape"
+            image_dir: "images"
+            label_dir: "labels_raw"
+            split: "val"
+            image_extensions: [".png"]
+            label_extensions: [".xml"]
+            class_map:
+                person: 0
+                car: 2
+                truck: 7
+                bus: 5
+                train: 6
+                motorbike: 3
+                motorcycle: 3
+                bicycle: 1
+
+
+depth:
+    weights: "" # optional; override via --depth-weights / config when generating real depth maps
