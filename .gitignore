@@ -117,3 +117,6 @@ dl_nets/**/outputs/
 dl_nets/**/data/
 dl_nets/**/Datasets/
 dl_nets/**/weights/
+
+mhung/
+tuannam/
